@@ -1,7 +1,7 @@
 reimann <- function(f, # function
                     a, # lower bound of integral
                     b, # upper bound of integral
-                    n, # number of nodes#
+                    n, # number of nodes
                     eps = 1e-6) {
   n <- c(n)
   h <- (b - a) / n
