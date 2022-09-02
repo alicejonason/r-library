@@ -9,7 +9,7 @@ trapezoidal <- function(f, # function
   int_apr <- c(h * (f(a) / 2 + sum(f(x_i)) + f(b) / 2))
   t <- 2
   cc <- eps + 100
-  while(cc > eps) {
+  while(cc > eps && t < 2000) {
     n[t] <- n[t - 1] * 2
     h <- (b - a) / n[t]
     x_i <- a + (1:(n[t] - 1)) * h
@@ -17,5 +17,5 @@ trapezoidal <- function(f, # function
     cc <- abs(int_apr[t] / int_apr[t - 1] - 1)
     t <- t + 1
   }
-  return(list(nodes = n, approximations = int_apr))
+  return(list(result = tail(int_apr, n = 1), nodes = n, approximations = int_apr))
 }
