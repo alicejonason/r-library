@@ -1,7 +1,7 @@
 simpsons <- function(f, # function
                      a, # lower bound of integral
                      b, # upper bound of integral
-                     n) { # number of nodes#
+                     n) { # number of nodes
   h <- (b - a) / n
   int_apr <- c(0)
   for (i in 1:(n / 2)) {
