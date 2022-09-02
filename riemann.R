@@ -1,4 +1,4 @@
-reimann <- function(f, # function
+riemann <- function(f, # function
                     a, # lower bound of integral
                     b, # upper bound of integral
                     n, # number of nodes
