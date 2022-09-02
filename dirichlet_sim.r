@@ -1,9 +1,10 @@
-dirichlet_sim <- function(n, alpha) {
-  theta <- as.data.frame(matrix(NA, n, length(alpha)))
-  for (j in 1:length(alpha)) {
-    theta[, j] <- rgamma(n, alpha[j], 1)
+dirichlet_sim <- function(n_iter, alpha) {
+  n_cat <- length(alpha)
+  theta <- matrix(NA, n_iter, n_cat)
+  for (j in 1:n_cat) {
+    theta[, j] <- rgamma(n_iter, alpha[j], 1)
   }
-  for (i in 1:n) {
+  for (i in 1:n_iter) {
     theta[i, ] <- theta[i, ] / sum(theta[i, ])
   }
   return(theta)
