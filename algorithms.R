@@ -70,9 +70,48 @@ simpsons <- function(f, # function
 # Root-finding algorithms
 # ---------------------------------------------------------------------------- #
 
-# Bisection
+# Bisection with absolute convergence criterion
+bisection <- function(deriv_fun, # function for computing derivative
+                      a,         # lower endpoint
+                      b,         # upper endpoint
+                      eps = 1e-6) {
+  x <- c()
+  t <- 1
 
+  if ((deriv_fun(a) * deriv_fun(b)) > 0)
+    stop("[a, b] must be s.t. g'(a) * g'(b) < 0")
+  x[t] <- (a + b) / 2
+  cc  <- eps + 100
+  while (cc > eps && t < 100) {
+    if ((deriv_fun(a) * deriv_fun(x[t])) <= 0)
+      b <- x[t]
+    if ((deriv_fun(x[t]) * deriv_fun(b)) < 0)
+      a <- x[t]
+    x[t + 1] <- (a + b) / 2
+    cc <- abs(x[t + 1] - x[t])
+    t <- t + 1
+  }
+  return(list(iterations = t - 1, x_max = tail(x, n = 1)))
+}
 
+# Secant method using absolute convergence criterion
+secant <- function(deriv_fun, # function for computing derivative
+                   x0,        # lower startpoint
+                   x1,        # upper startpoint
+                   eps = 1e-6) {
+  t <- 2
+  x <- c()
+  x[t - 1] <- x0
+  x[t] <- x1
+  cc <- eps + 100
+  while (cc > eps && t < 100) {
+    x[t + 1] <- x[t] - deriv_fun(x[t]) * ((x[t] - x[t - 1]) / 
+                                       (deriv_fun(x[t]) - deriv_fun(x[t - 1])))
+    cc <- abs(x[t + 1] - x[t])
+    t <- t + 1
+  }
+  return(list(iterations = t - 2, x_max = tail(x, n = 1)))
+}
 
 # Newton-Raphson
 newton_raphson <- function(start_values, # vector of starting values
